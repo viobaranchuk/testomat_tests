@@ -10,6 +10,7 @@ load_dotenv()
 class Config:
     base_url: str
     base_app_url: str
+    login_url: str
     email: str
     password: str
 
@@ -18,6 +19,7 @@ def configs():
     return Config(
         base_url=os.getenv("BASE_APP_URL"),
         base_app_url=os.getenv("BASE_APP_URL"),
+        login_url=os.getenv("LOGIN_URL"),
         email=os.getenv("EMAIL"),
         password=os.getenv("PASSWORD"),
     )
