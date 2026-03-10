@@ -1,18 +1,9 @@
 import pytest
 from playwright.sync_api import Page
 
-from test.conftest import Config
-from web.components.ProjectCard import ProjectCard, Badges
-from web.pages.LoginPage import LoginPage
+from web.components.ProjectCard import Badges
 from web.pages.ProjectsPage import ProjectsPage
 
-
-@pytest.fixture(scope="function")
-def login(page: Page, configs: Config):
-    login_page = LoginPage(page)
-    login_page.open()
-    login_page.is_loaded()
-    login_page.login(configs.email, configs.password)
 
 def test_projects_page_search(page: Page, login):
     projects_page = ProjectsPage(page)
@@ -37,6 +28,3 @@ def test_projects_page_table_view(page: Page, login):
 
     projects_page.switch_to_table_view()
     projects_page.verify_table_view()
-
-
-
