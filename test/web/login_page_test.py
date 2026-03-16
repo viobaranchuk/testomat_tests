@@ -1,30 +1,24 @@
 from faker import Faker
-from playwright.sync_api import Page
 
-from src.web.pages.HomePage import HomePage
-from src.web.pages.LoginPage import LoginPage
 from test.conftest import Config
-from web.pages.ProjectsPage import ProjectsPage
+from web.Application import Application
 
 
-def test_login_invalid(page: Page, configs: Config):
-    home_page = HomePage(page)
-    home_page.open()
-    home_page.is_loaded()
-    home_page.click_login()
+def test_login_invalid(app: Application, configs: Config):
+    app.home_page.open()
+    app.home_page.is_loaded()
+    app.home_page.click_login()
 
-    login_page = LoginPage(page)
-    login_page.is_loaded()
-    login_page.login(configs.email, Faker().password(length=10))
-    login_page.invalid_login_message_visible()
+    app.login_page.is_loaded()
+    app.login_page.login(configs.email, Faker().password(length=10))
+    app.login_page.invalid_login_message_visible()
 
-def test_login_with_valid_creds(page: Page, configs: Config):
-    home_page = HomePage(page)
-    home_page.open()
-    home_page.is_loaded()
-    home_page.click_login()
 
-    login_page = LoginPage(page)
-    login_page.is_loaded()
-    login_page.login(configs.email, configs.password)
-    ProjectsPage(page).verify_page_is_loaded()
+def test_login_with_valid_creds(app: Application, configs: Config):
+    app.home_page.open()
+    app.home_page.is_loaded()
+    app.home_page.click_login()
+
+    app.login_page.is_loaded()
+    app.login_page.login(configs.email, configs.password)
+    app.projects_page.verify_page_is_loaded()

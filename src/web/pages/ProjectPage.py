@@ -1,11 +1,15 @@
+from idlelib import sidebar
 from typing import Self
 
 from playwright.sync_api import Page, expect
+
+from web.components import SideBar
 
 
 class ProjectPage:
     def __init__(self, page: Page):
         self.page = page
+        self.side_bar = SideBar(page)
 
     def is_loaded(self) -> Self :
         expect(self.page.locator(".sticky-header")).to_be_visible()
