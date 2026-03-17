@@ -11,7 +11,6 @@ class HomePage:
     def click_login(self):
         self.page.locator(".side-menu .login-item").click()
 
-
     def is_loaded(self):
         expect(self.page.locator("#headerMenuWrapper")).to_be_visible()
         expect(self.page.locator(".side-menu .login-item")).to_be_visible()

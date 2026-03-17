@@ -3,6 +3,10 @@ from dataclasses import dataclass
 
 import pytest
 from dotenv import load_dotenv
+from playwright.sync_api import Page
+
+from web.Application import Application
+from web.pages.LoginPage import LoginPage
 
 load_dotenv()
 
@@ -10,6 +14,7 @@ load_dotenv()
 class Config:
     base_url: str
     base_app_url: str
+    login_url: str
     email: str
     password: str
 
@@ -18,6 +23,19 @@ def configs():
     return Config(
         base_url=os.getenv("BASE_APP_URL"),
         base_app_url=os.getenv("BASE_APP_URL"),
+        login_url=os.getenv("LOGIN_URL"),
         email=os.getenv("EMAIL"),
         password=os.getenv("PASSWORD"),
     )
+
+@pytest.fixture(scope="function")
+def app(page: Page) -> Application:
+    return Application(page)
+
+
+@pytest.fixture(scope="function")
+def login(page: Page, configs: Config):
+    login_page = LoginPage(page)
+    login_page.open()
+    login_page.is_loaded()
+    login_page.login(configs.email, configs.password)
