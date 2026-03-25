@@ -5,6 +5,7 @@ from web.pages import HomePage, LoginPage, NewProjectPage, ProjectPage, Projects
 
 class Application:
     def __init__(self, page: Page):
+        self.page = page
         self.home_page = HomePage(page)
         self.login_page = LoginPage(page)
         self.new_project_page = NewProjectPage(page)

@@ -37,8 +37,10 @@ def login_user(page: Page, email: str, password: str):
     page.locator("#content-desktop #user_password").fill(password)
     page.get_by_role("button", name="Sign In").click()
 
+
 def open_login_page(page: Page, configs: Config):
     page.goto(f"{configs.base_app_url}/users/sign_in")
+
 
 def test_should_be_possible_to_open_free_project(page: Page, login):
     page.locator("#content-desktop #company_id").click()
@@ -46,6 +48,7 @@ def test_should_be_possible_to_open_free_project(page: Page, login):
     target_project = "Books"
     search_for_project(page, target_project)
     expect(page.get_by_role("heading", name=target_project)).to_be_hidden()
+
 
 def test_create_new_project(page: Page, login):
     project_name: str = faker.Faker().text(10)
@@ -60,6 +63,7 @@ def test_create_new_project(page: Page, login):
     page.get_by_role("button", name="Create Demo").click()
 
     page.wait_for_url(re.compile(".*projects/cucumberjs-demo-project.*"))
+
 
 def open_home_page(page: Page, configs: Config):
     page.goto(configs.base_url)
