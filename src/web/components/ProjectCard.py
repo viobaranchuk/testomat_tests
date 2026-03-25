@@ -26,7 +26,7 @@ class ProjectCard:
         expect(self._badges).to_contain_text(expected_badges.value)
 
     def click(self):
-        self._link.click()
+        self._card.click()
 
 
 class Badges(Enum):

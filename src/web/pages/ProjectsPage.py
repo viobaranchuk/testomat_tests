@@ -18,7 +18,8 @@ class ProjectsPage:
 
         self.grid_container = page.locator("#grid")
         self._project_cards = page.locator("#grid ul li a[href*= '/projects/']")
-        self.table_view_grid = page.locator("#myTable")
+        self.table_view = page.locator("#table")
+        self.grid_view = page.locator("#grid")
 
     def navigate(self) -> "ProjectsPage":
         self.page.goto(os.getenv("BASE_APP_URL"))
@@ -30,7 +31,7 @@ class ProjectsPage:
 
     def verify_page_is_loaded(self):
         expect(self.header.page_title).to_be_visible()
-        expect(self.grid_container).to_be_visible()
+        expect(self._project_cards.first).to_be_visible()
 
     def get_projects(self) -> List[ProjectCard]:
         return [ProjectCard(card) for card in self._project_cards.all()]
@@ -39,6 +40,10 @@ class ProjectsPage:
         (self.header.search(query))
         self.page.wait_for_timeout(300)
         return self.get_projects()
+
+    def switch_to_grid_view(self):
+        if not self.grid_container.is_visible():
+            self.header.btn_grid_view.click()
 
     def switch_to_table_view(self):
         self.header.btn_table_view.click()
@@ -54,4 +59,7 @@ class ProjectsPage:
         return ProjectCard(card)
 
     def verify_table_view(self):
-        expect(self.table_view_grid).to_be_visible()
+        expect(self.table_view).to_be_visible()
+
+    def verify_grid_view(self):
+        expect(self.grid_view).to_be_visible()
